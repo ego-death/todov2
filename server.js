@@ -44,8 +44,17 @@ app.put('/modify', (req, res) => {
 app.post('/addTask', urlencodedParser, (req, res) => {
     db.collection('tasks').insertOne({taskName: req.body.taskName, completed: false})
     .then(data => {
-        console.log('Successfully inserted')
         res.redirect('/');
+    })
+    .catch(err => {
+        console.log(err);
+    })
+});
+
+app.delete('/deleteTask', (req, res) => {
+    db.collection('tasks').deleteOne({taskName: req.body.taskName, completed: req.body.completed})
+    .then(data => {
+        res.json('Delete successful');
     })
     .catch(err => {
         console.log(err);

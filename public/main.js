@@ -17,14 +17,15 @@ tasks.forEach(el=>{
 deletes.forEach(el=>{
     el.addEventListener('click', async function(){
         const taskName = this.parentNode.childNodes[1].innerText;
-        const completed = Array.from(this.classList).includes('complete');
-        const res = await fetch('/modify', {
-            method: 'put',
+        const completed = Array.from(this.parentNode.childNodes[1].classList).includes('complete');
+        console.log(completed);
+        const res = await fetch('/deleteTask', {
+            method: 'delete',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({taskName, completed})
         }) 
         const data = await res.json();
         console.log(data);
         window.location.reload();
-    })
-});
+     })
+})
